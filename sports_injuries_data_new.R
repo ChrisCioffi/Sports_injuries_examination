@@ -859,30 +859,6 @@ ip_knee_leg_ankle_sprains <- ipall_all_with_zips %>%
     arrange(desc(knee_leg_ankle_sprain_count))
   
   
-  #ok so year made a wonky graph. So now we're trying to zero in on quarter data.
-  #so, here we are converting the year and quarter field into one. 
-  op_knee_leg_ankle_sprains$NewDate <- as.yearqtr(paste(op_knee_leg_ankle_sprains$YEAR, op_knee_leg_ankle_sprains$QTR, sep = ' Q'))
-  #now we are using the library(zoo) to make them a yearqtr type...this should help us graph
-  yearqtr(op_knee_leg_ankle_sprains$NewDate)
-  #making sure it's a yearqtr field 
-  class(op_knee_leg_ankle_sprains$NewDate)
-  #and now we try and count and groupbefore we graph. 
-  ip_year_qtr<- op_knee_leg_ankle_sprains %>%
-    group_by(NewDate, sport) %>%
-    summarise(count = n()) %>%
-    #arrange the list in descending order
-    arrange(desc(NewDate)) 
-  
-  #now we graph. Looks funny but looks right. 
-  ggplot(data=op_knee_leg_ankle_sprains, aes(x=NewDate, y=knee_leg_ankle_sprain_count, group=sport)) +
-    geom_line(aes(color=sport))+
-    geom_point(aes(color=sport)) +
-    scale_x_yearqtr(format="%YQ%q", n=5) +
-    xlab("Quarter") +
-    ylab("Number of injuries") +
-    ggtitle("OP Year by quarter")
-  
-  
   op_knee_leg_ankle_sprains$knee_leg_ankle_sprain_count[ op_knee_leg_ankle_sprains$knee_leg_ankle_sprain_count<=10] <- "Less than 10"
   ip_knee_leg_ankle_sprains$knee_leg_ankle_sprain_count[ ip_knee_leg_ankle_sprains$knee_leg_ankle_sprain_count<=10] <- "Less than 10"
   
