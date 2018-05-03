@@ -1,0 +1,342 @@
+##add in QTR in every single query for these. delete old spreadsheets and then we'll run stuff friday##
+
+
+##############IPALL FOR FOOTBALL PLAYERS IDC9 ########################
+# count of all age groups (in patient) that were coded as an injury 0070 (football injury) -- we ran this query to make sure we werent'getting anything funky, and so we could double chekck our numbers in the the next query.
+# 1 - this query also double checked the years and the age categories within those years. We learned that some age groups were inconsistent by year. The bottom end is reresented for age categories -- 10 for 10-14 and 15 for 15-19. 
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0070' or DIAG1 like 'E0070' or DIAG2 like 'E0070' or DIAG3 like 'E0070' or DIAG4 like 'E0070' or DIAG5 like 'E0070' or DIAG6 like 'E0070' or DIAG7 like 'E0070' or DIAG8 like 'E0070' or DIAG9 like 'E0070' or DIAG10 like 'E0070' or DIAG11 like 'E0070' or DIAG12 like 'E0070' or DIAG13 like 'E0070' or DIAG14 like 'E0070' or DIAG15 like 'E0070' or DIAG16 like 'E0070' or DIAG17 like 'E0070' or DIAG18 like 'E0070' or DIAG19 like 'E0070' or DIAG20 like 'E0070' or DIAG21 like 'E0070' or DIAG22 like 'E0070' or DIAG23 like 'E0070' or DIAG24 like 'E0070' or DIAG25 like 'E0070' or DIAG26 like 'E0070' or DIAG27 like 'E0070' or DIAG28 like 'E0070')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR;
+
+
+# 2 - selects a number of categories from ipall (inpatient) and searches for E0070 (football) from the ICD 9. We ran this query, so we could make sure that the count query was correct, and we were looking at the right information. We also used it to look at the correct years, etc. 
+select UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, DIED, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, MAJSERVI, LOS, PRINDIAG, PRINPROC, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28, DIAG29, PROC1, PROC2, PROC3, PROC4, PROC5, PROC6, PROC7, PROC8, PROC9, PROC10, PROC11, PROC12, PROC13, PROC14, PROC15, PROC16, PROC17, PROC18, PROC19, PROC20, PROC21, PROC22, PROC23, PROC24, PROC25, PROC26, PROC27, PROC28, PROC29 
+from ipALL 
+where((icdflag = '9' and (PRINDIAG like 'E0070' or DIAG1 like 'E0070' or DIAG2 like 'E0070' or DIAG3 like 'E0070' or DIAG4 like 'E0070' or DIAG5 like 'E0070' or DIAG6 like 'E0070' or DIAG7 like 'E0070' or DIAG8 like 'E0070' or DIAG9 like 'E0070' or DIAG10 like 'E0070' or DIAG11 like 'E0070' or DIAG12 like 'E0070' or DIAG13 like 'E0070' or DIAG14 like 'E0070' or DIAG15 like 'E0070' or DIAG16 like 'E0070' or DIAG17 like 'E0070' or DIAG18 like 'E0070' or DIAG19 like 'E0070' or DIAG20 like 'E0070' or DIAG21 like 'E0070' or DIAG22 like 'E0070' or DIAG23 like 'E0070' or DIAG24 like 'E0070' or DIAG25 like 'E0070' or DIAG26 like 'E0070' or DIAG27 like 'E0070' or DIAG28 like 'E0070' or DIAG29 like 'E0070'))) 
+order by YEAR desc;
+
+
+# 3 - Let's get more specific about the cases we want to export for ICD 9 coding. This query will select fields for INPATIENT football injuries that have age_groups of 4 or 15-19 or the bottom of the 15-9 range, 15. This will end up being the code we want replaced with stuff for every query we end up wanting. This is also inpatient football icd9
+#this is the dataset that we want to put in a spreadsheet. Fun. Good job. 
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0070' or DIAG1 like 'E0070' or DIAG2 like 'E0070' or DIAG3 like 'E0070' or DIAG4 like 'E0070' or DIAG5 like 'E0070' or DIAG6 like 'E0070' or DIAG7 like 'E0070' or DIAG8 like 'E0070' or DIAG9 like 'E0070' or DIAG10 like 'E0070' or DIAG11 like 'E0070' or DIAG12 like 'E0070' or DIAG13 like 'E0070' or DIAG14 like 'E0070' or DIAG15 like 'E0070' or DIAG16 like 'E0070' or DIAG17 like 'E0070' or DIAG18 like 'E0070' or DIAG19 like 'E0070' or DIAG20 like 'E0070' or DIAG21 like 'E0070' or DIAG22 like 'E0070' or DIAG23 like 'E0070' or DIAG24 like 'E0070' or DIAG25 like 'E0070' or DIAG26 like 'E0070' or DIAG27 like 'E0070' or DIAG28 like 'E0070') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+##############IPALL FOR FOOTBALL PLAYERS IDC10 ########################
+# 1- count of all age groups (in patient) that were coded as an injury 0070 (football injury) -- we ran this query to make sure we werent'getting anything funky, and so we could double chekck our numbers in the the next query.
+# this query also double checked the years and the age categories within those years. We learned that some age groups were inconsistent by year. The bottom end is reresented for age categories -- 10 for 10-14 and 15 for 15-19. 
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9361' or DIAG1 like 'Y9361' or DIAG2 like 'Y9361' or DIAG3 like 'Y9361' or DIAG4 like 'Y9361' or DIAG5 like 'Y9361' or DIAG6 like 'Y9361' or DIAG7 like 'Y9361' or DIAG8 like 'Y9361' or DIAG9 like 'Y9361' or DIAG10 like 'Y9361' or DIAG11 like 'Y9361' or DIAG12 like 'Y9361' or DIAG13 like 'Y9361' or DIAG14 like 'Y9361' or DIAG15 like 'Y9361' or DIAG16 like 'Y9361' or DIAG17 like 'Y9361' or DIAG18 like 'Y9361' or DIAG19 like 'Y9361' or DIAG20 like 'Y9361' or DIAG21 like 'Y9361' or DIAG22 like 'Y9361' or DIAG23 like 'Y9361' or DIAG24 like 'Y9361' or DIAG25 like 'Y9361' or DIAG26 like 'Y9361' or DIAG27 like 'Y9361' or DIAG28 like 'Y9361')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR
+;
+
+
+# 2-  selects a number of categories from ipall (inpatient) and searches for Y9361 (football) from the ICD 10. We ran this query, so we could make sure that the count query was correct, and we were looking at the right information. We also used it to look at the correct years, etc. 
+select UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, DIED, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, MAJSERVI, LOS, TOT_CHG, PRELANG_CD, READM30, PRINDIAG, PRINPROC, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28, DIAG29, PROC1, PROC2, PROC3, PROC4, PROC5, PROC6, PROC7, PROC8, PROC9, PROC10, PROC11, PROC12, PROC13, PROC14, PROC15, PROC16, PROC17, PROC18, PROC19, PROC20, PROC21, PROC22, PROC23, PROC24, PROC25, PROC26, PROC27, PROC28, PROC29 
+from ipALL 
+where((icdflag = '0' and (PRINDIAG like 'Y9361' or DIAG1 like 'Y9361' or DIAG2 like 'Y9361' or DIAG3 like 'Y9361' or DIAG4 like 'Y9361' or DIAG5 like 'Y9361' or DIAG6 like 'Y9361' or DIAG7 like 'Y9361' or DIAG8 like 'Y9361' or DIAG9 like 'Y9361' or DIAG10 like 'Y9361' or DIAG11 like 'Y9361' or DIAG12 like 'Y9361' or DIAG13 like 'Y9361' or DIAG14 like 'Y9361' or DIAG15 like 'Y9361' or DIAG16 like 'Y9361' or DIAG17 like 'Y9361' or DIAG18 like 'Y9361' or DIAG19 like 'Y9361' or DIAG20 like 'Y9361' or DIAG21 like 'Y9361' or DIAG22 like 'Y9361' or DIAG23 like 'Y9361' or DIAG24 like 'Y9361' or DIAG25 like 'Y9361' or DIAG26 like 'Y9361' or DIAG27 like 'Y9361' or DIAG28 like 'Y9361' or DIAG29 like 'Y9361'))) 
+order by YEAR desc;
+
+
+# 3 -- Let's get more specific about the cases we want to export for ICD 10 coding. This query will select fields for INPATIENT football injuries that have age_groups of 4 or 15-19 or the bottom of the 15-9 range, 15. This will end up being the code we want replaced with stuff for every query we end up wanting. This is also inpatient football icd10
+#this is the dataset that we want to put in a spreadsheet. Fun. Good job. 
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9361' or DIAG1 like 'Y9361' or DIAG2 like 'Y9361' or DIAG3 like 'Y9361' or DIAG4 like 'Y9361' or DIAG5 like 'Y9361' or DIAG6 like 'Y9361' or DIAG7 like 'Y9361' or DIAG8 like 'Y9361' or DIAG9 like 'Y9361' or DIAG10 like 'Y9361' or DIAG11 like 'Y9361' or DIAG12 like 'Y9361' or DIAG13 like 'Y9361' or DIAG14 like 'Y9361' or DIAG15 like 'Y9361' or DIAG16 like 'Y9361' or DIAG17 like 'Y9361' or DIAG18 like 'Y9361' or DIAG19 like 'Y9361' or DIAG20 like 'Y9361' or DIAG21 like 'Y9361' or DIAG22 like 'Y9361' or DIAG23 like 'Y9361' or DIAG24 like 'Y9361' or DIAG25 like 'Y9361' or DIAG26 like 'Y9361' or DIAG27 like 'Y9361' or DIAG28 like 'Y9361') and AGE_GROUP = '15-19' )
+;
+
+
+
+
+###################################### OPALL for FOOTBALL PLAYERS 
+
+# 1 - count of all age groups that were (outpatient) and coded as an injury 0070 (football injury)
+select AGE_GROUP, YEAR, count(*) 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0070' or DIAG1 like 'E0070' or DIAG2 like 'E0070' or DIAG3 like 'E0070' or DIAG4 like 'E0070' or DIAG5 like 'E0070' or DIAG6 like 'E0070' or DIAG7 like 'E0070' or DIAG8 like 'E0070' or DIAG9 like 'E0070' or DIAG10 like 'E0070' or DIAG11 like 'E0070' or DIAG12 like 'E0070' or DIAG13 like 'E0070' or DIAG14 like 'E0070' or DIAG15 like 'E0070' or DIAG16 like 'E0070' or DIAG17 like 'E0070' or DIAG18 like 'E0070' or DIAG19 like 'E0070' or DIAG20 like 'E0070' or DIAG21 like 'E0070' or DIAG22 like 'E0070' or DIAG23 like 'E0070' or DIAG24 like 'E0070' or DIAG25 like 'E0070' or DIAG26 like 'E0070' or DIAG27 like 'E0070' or DIAG28 like 'E0070')and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR;
+
+# 2 - selects a number of categories from opall (outpatient) and searches for E0070 (football) from the ICD 9. THIS IS THE ONE WE RUN FOR OUTPATIENT ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, TOT_CHG, PRELANG, RESIDENT_STATUS,  PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0070' or DIAG1 like 'E0070' or DIAG2 like 'E0070' or DIAG3 like 'E0070' or DIAG4 like 'E0070' or DIAG5 like 'E0070' or DIAG6 like 'E0070' or DIAG7 like 'E0070' or DIAG8 like 'E0070' or DIAG9 like 'E0070' or DIAG10 like 'E0070' or DIAG11 like 'E0070' or DIAG12 like 'E0070' or DIAG13 like 'E0070' or DIAG14 like 'E0070' or DIAG15 like 'E0070' or DIAG16 like 'E0070' or DIAG17 like 'E0070' or DIAG18 like 'E0070' or DIAG19 like 'E0070' or DIAG20 like 'E0070' or DIAG21 like 'E0070' or DIAG22 like 'E0070' or DIAG23 like 'E0070' or DIAG24 like 'E0070' or DIAG25 like 'E0070' or DIAG26 like 'E0070' or DIAG27 like 'E0070' or DIAG28 like 'E0070') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+# 3 selects a number of categories from opall (outpatient) and searches for Y9361 (football) from the ICD 10. 
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9361' or DIAG1 like 'Y9361' or DIAG2 like 'Y9361' or DIAG3 like 'Y9361' or DIAG4 like 'Y9361' or DIAG5 like 'Y9361' or DIAG6 like 'Y9361' or DIAG7 like 'Y9361' or DIAG8 like 'Y9361' or DIAG9 like 'Y9361' or DIAG10 like 'Y9361' or DIAG11 like 'Y9361' or DIAG12 like 'Y9361' or DIAG13 like 'Y9361' or DIAG14 like 'Y9361' or DIAG15 like 'Y9361' or DIAG16 like 'Y9361' or DIAG17 like 'Y9361' or DIAG18 like 'Y9361' or DIAG19 like 'Y9361' or DIAG20 like 'Y9361' or DIAG21 like 'Y9361' or DIAG22 like 'Y9361' or DIAG23 like 'Y9361' or DIAG24 like 'Y9361' or DIAG25 like 'Y9361' or DIAG26 like 'Y9361' or DIAG27 like 'Y9361' or DIAG28 like 'Y9361') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+
+#COUNT FOR SOCCER TO MAKE SURE NUMBERS ARE OK ip icd9
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0075' or DIAG1 like 'E0075' or DIAG2 like 'E0075' or DIAG3 like 'E0075' or DIAG4 like 'E0075' or DIAG5 like 'E0075' or DIAG6 like 'E0075' or DIAG7 like 'E0075' or DIAG8 like 'E0075' or DIAG9 like 'E0075' or DIAG10 like 'E0075' or DIAG11 like 'E0075' or DIAG12 like 'E0075' or DIAG13 like 'E0075' or DIAG14 like 'E0075' or DIAG15 like 'E0075' or DIAG16 like 'E0075' or DIAG17 like 'E0075' or DIAG18 like 'E0075' or DIAG19 like 'E0075' or DIAG20 like 'E0075' or DIAG21 like 'E0075' or DIAG22 like 'E0075' or DIAG23 like 'E0075' or DIAG24 like 'E0075' or DIAG25 like 'E0075' or DIAG26 like 'E0075' or DIAG27 like 'E0075' or DIAG28 like 'E0075')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR;
+
+#inpatient soccer ICD9
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0075' or DIAG1 like 'E0075' or DIAG2 like 'E0075' or DIAG3 like 'E0075' or DIAG4 like 'E0075' or DIAG5 like 'E0075' or DIAG6 like 'E0075' or DIAG7 like 'E0075' or DIAG8 like 'E0075' or DIAG9 like 'E0075' or DIAG10 like 'E0075' or DIAG11 like 'E0075' or DIAG12 like 'E0075' or DIAG13 like 'E0075' or DIAG14 like 'E0075' or DIAG15 like 'E0075' or DIAG16 like 'E0075' or DIAG17 like 'E0075' or DIAG18 like 'E0075' or DIAG19 like 'E0075' or DIAG20 like 'E0075' or DIAG21 like 'E0075' or DIAG22 like 'E0075' or DIAG23 like 'E0075' or DIAG24 like 'E0075' or DIAG25 like 'E0075' or DIAG26 like 'E0075' or DIAG27 like 'E0075' or DIAG28 like 'E0075') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#inpatient soccer ICD10
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS,  PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9366' or DIAG1 like 'Y9366' or DIAG2 like 'Y9366' or DIAG3 like 'Y9366' or DIAG4 like 'Y9366' or DIAG5 like 'Y9366' or DIAG6 like 'Y9366' or DIAG7 like 'Y9366' or DIAG8 like 'Y9366' or DIAG9 like 'Y9366' or DIAG10 like 'Y9366' or DIAG11 like 'Y9366' or DIAG12 like 'Y9366' or DIAG13 like 'Y9366' or DIAG14 like 'Y9366' or DIAG15 like 'Y9366' or DIAG16 like 'Y9366' or DIAG17 like 'Y9366' or DIAG18 like 'Y9366' or DIAG19 like 'Y9366' or DIAG20 like 'Y9366' or DIAG21 like 'Y9366' or DIAG22 like 'Y9366' or DIAG23 like 'Y9366' or DIAG24 like 'Y9366' or DIAG25 like 'Y9366' or DIAG26 like 'Y9366' or DIAG27 like 'Y9366' or DIAG28 like 'Y9366') and AGE_GROUP = '15-19' )
+;
+
+#outpatient soccer ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0075' or DIAG1 like 'E0075' or DIAG2 like 'E0075' or DIAG3 like 'E0075' or DIAG4 like 'E0075' or DIAG5 like 'E0075' or DIAG6 like 'E0075' or DIAG7 like 'E0075' or DIAG8 like 'E0075' or DIAG9 like 'E0075' or DIAG10 like 'E0075' or DIAG11 like 'E0075' or DIAG12 like 'E0075' or DIAG13 like 'E0075' or DIAG14 like 'E0075' or DIAG15 like 'E0075' or DIAG16 like 'E0075' or DIAG17 like 'E0075' or DIAG18 like 'E0075' or DIAG19 like 'E0075' or DIAG20 like 'E0075' or DIAG21 like 'E0075' or DIAG22 like 'E0075' or DIAG23 like 'E0075' or DIAG24 like 'E0075' or DIAG25 like 'E0075' or DIAG26 like 'E0075' or DIAG27 like 'E0075' or DIAG28 like 'E0075') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient soccer ICD10
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9366' or DIAG1 like 'Y9366' or DIAG2 like 'Y9366' or DIAG3 like 'Y9366' or DIAG4 like 'Y9366' or DIAG5 like 'Y9366' or DIAG6 like 'Y9366' or DIAG7 like 'Y9366' or DIAG8 like 'Y9366' or DIAG9 like 'Y9366' or DIAG10 like 'Y9366' or DIAG11 like 'Y9366' or DIAG12 like 'Y9366' or DIAG13 like 'Y9366' or DIAG14 like 'Y9366' or DIAG15 like 'Y9366' or DIAG16 like 'Y9366' or DIAG17 like 'Y9366' or DIAG18 like 'Y9366' or DIAG19 like 'Y9366' or DIAG20 like 'Y9366' or DIAG21 like 'Y9366' or DIAG22 like 'Y9366' or DIAG23 like 'Y9366' or DIAG24 like 'Y9366' or DIAG25 like 'Y9366' or DIAG26 like 'Y9366' or DIAG27 like 'Y9366' or DIAG28 like 'Y9366') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+
+# CHECK TO SEE IF ANY CHEERLEADING CASES AT ALL(INPATIENT9)??
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0054' or DIAG1 like 'E0054' or DIAG2 like 'E0054' or DIAG3 like 'E0054' or DIAG4 like 'E0054' or DIAG5 like 'E0054' or DIAG6 like 'E0054' or DIAG7 like 'E0054' or DIAG8 like 'E0054' or DIAG9 like 'E0054' or DIAG10 like 'E0054' or DIAG11 like 'E0054' or DIAG12 like 'E0054' or DIAG13 like 'E0054' or DIAG14 like 'E0054' or DIAG15 like 'E0054' or DIAG16 like 'E0054' or DIAG17 like 'E0054' or DIAG18 like 'E0054' or DIAG19 like 'E0054' or DIAG20 like 'E0054' or DIAG21 like 'E0054' or DIAG22 like 'E0054' or DIAG23 like 'E0054' or DIAG24 like 'E0054' or DIAG25 like 'E0054' or DIAG26 like 'E0054' or DIAG27 like 'E0054' or DIAG28 like 'E0054')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR;
+
+# CHECK FOR 1CD10 TOO FOR CHEERLEADING CASES (INPATIENT)
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9345' or DIAG1 like 'Y9345' or DIAG2 like 'Y9345' or DIAG3 like 'Y9345' or DIAG4 like 'Y9345' or DIAG5 like 'Y9345' or DIAG6 like 'Y9345' or DIAG7 like 'Y9345' or DIAG8 like 'Y9345' or DIAG9 like 'Y9345' or DIAG10 like 'Y9345' or DIAG11 like 'Y9345' or DIAG12 like 'Y9345' or DIAG13 like 'Y9345' or DIAG14 like 'Y9345' or DIAG15 like 'Y9345' or DIAG16 like 'Y9345' or DIAG17 like 'Y9345' or DIAG18 like 'Y9345' or DIAG19 like 'Y9345' or DIAG20 like 'Y9345' or DIAG21 like 'Y9345' or DIAG22 like 'Y9345' or DIAG23 like 'Y9345' or DIAG24 like 'Y9345' or DIAG25 like 'Y9345' or DIAG26 like 'Y9345' or DIAG27 like 'Y9345' or DIAG28 like 'Y9345')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR
+;
+
+#CHECK CHEERLEADING OUTPATIENT 9
+select AGE_GROUP, YEAR, count(*) 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0054' or DIAG1 like 'E0054' or DIAG2 like 'E0054' or DIAG3 like 'E0054' or DIAG4 like 'E0054' or DIAG5 like 'E0054' or DIAG6 like 'E0054' or DIAG7 like 'E0054' or DIAG8 like 'E0054' or DIAG9 like 'E0054' or DIAG10 like 'E0054' or DIAG11 like 'E0054' or DIAG12 like 'E0054' or DIAG13 like 'E0054' or DIAG14 like 'E0054' or DIAG15 like 'E0054' or DIAG16 like 'E0054' or DIAG17 like 'E0054' or DIAG18 like 'E0054' or DIAG19 like 'E0054' or DIAG20 like 'E0054' or DIAG21 like 'E0054' or DIAG22 like 'E0054' or DIAG23 like 'E0054' or DIAG24 like 'E0054' or DIAG25 like 'E0054' or DIAG26 like 'E0054' or DIAG27 like 'E0054' or DIAG28 like 'E0054')and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR;
+#inpatient cheerleading ICD9
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, PRINDIAG, TOT_CHG, PRELANG_CD, READM30, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0054' or DIAG1 like 'E0054' or DIAG2 like 'E0054' or DIAG3 like 'E0054' or DIAG4 like 'E0054' or DIAG5 like 'E0054' or DIAG6 like 'E0054' or DIAG7 like 'E0054' or DIAG8 like 'E0054' or DIAG9 like 'E0054' or DIAG10 like 'E0054' or DIAG11 like 'E0054' or DIAG12 like 'E0054' or DIAG13 like 'E0054' or DIAG14 like 'E0054' or DIAG15 like 'E0054' or DIAG16 like 'E0054' or DIAG17 like 'E0054' or DIAG18 like 'E0054' or DIAG19 like 'E0054' or DIAG20 like 'E0054' or DIAG21 like 'E0054' or DIAG22 like 'E0054' or DIAG23 like 'E0054' or DIAG24 like 'E0054' or DIAG25 like 'E0054' or DIAG26 like 'E0054' or DIAG27 like 'E0054' or DIAG28 like 'E0054') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#inpatient cheerleading ICD10. ONLY ONE CASE IF WE WANT IT WE'LL PULL.
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9345' or DIAG1 like 'Y9345' or DIAG2 like 'Y9345' or DIAG3 like 'Y9345' or DIAG4 like 'Y9345' or DIAG5 like 'Y9345' or DIAG6 like 'Y9345' or DIAG7 like 'Y9345' or DIAG8 like 'Y9345' or DIAG9 like 'Y9345' or DIAG10 like 'Y9345' or DIAG11 like 'Y9345' or DIAG12 like 'Y9345' or DIAG13 like 'Y9345' or DIAG14 like 'Y9345' or DIAG15 like 'Y9345' or DIAG16 like 'Y9345' or DIAG17 like 'Y9345' or DIAG18 like 'Y9345' or DIAG19 like 'Y9345' or DIAG20 like 'Y9345' or DIAG21 like 'Y9345' or DIAG22 like 'Y9345' or DIAG23 like 'Y9345' or DIAG24 like 'Y9345' or DIAG25 like 'Y9345' or DIAG26 like 'Y9345' or DIAG27 like 'Y9345' or DIAG28 like 'Y9345') and AGE_GROUP = '15-19' )
+;
+#outpatient cheerleading ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0054' or DIAG1 like 'E0054' or DIAG2 like 'E0054' or DIAG3 like 'E0054' or DIAG4 like 'E0054' or DIAG5 like 'E0054' or DIAG6 like 'E0054' or DIAG7 like 'E0054' or DIAG8 like 'E0054' or DIAG9 like 'E0054' or DIAG10 like 'E0054' or DIAG11 like 'E0054' or DIAG12 like 'E0054' or DIAG13 like 'E0054' or DIAG14 like 'E0054' or DIAG15 like 'E0054' or DIAG16 like 'E0054' or DIAG17 like 'E0054' or DIAG18 like 'E0054' or DIAG19 like 'E0054' or DIAG20 like 'E0054' or DIAG21 like 'E0054' or DIAG22 like 'E0054' or DIAG23 like 'E0054' or DIAG24 like 'E0054' or DIAG25 like 'E0054' or DIAG26 like 'E0054' or DIAG27 like 'E0054' or DIAG28 like 'E0054') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient cheerleading ICD10
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9345' or DIAG1 like 'Y9345' or DIAG2 like 'Y9345' or DIAG3 like 'Y9345' or DIAG4 like 'Y9345' or DIAG5 like 'Y9345' or DIAG6 like 'Y9345' or DIAG7 like 'Y9345' or DIAG8 like 'Y9345' or DIAG9 like 'Y9345' or DIAG10 like 'Y9345' or DIAG11 like 'Y9345' or DIAG12 like 'Y9345' or DIAG13 like 'Y9345' or DIAG14 like 'Y9345' or DIAG15 like 'Y9345' or DIAG16 like 'Y9345' or DIAG17 like 'Y9345' or DIAG18 like 'Y9345' or DIAG19 like 'Y9345' or DIAG20 like 'Y9345' or DIAG21 like 'Y9345' or DIAG22 like 'Y9345' or DIAG23 like 'Y9345' or DIAG24 like 'Y9345' or DIAG25 like 'Y9345' or DIAG26 like 'Y9345' or DIAG27 like 'Y9345' or DIAG28 like 'Y9345') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#inpatient basketball ICD9
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0076' or DIAG1 like 'E0076' or DIAG2 like 'E0076' or DIAG3 like 'E0076' or DIAG4 like 'E0076' or DIAG5 like 'E0076' or DIAG6 like 'E0076' or DIAG7 like 'E0076' or DIAG8 like 'E0076' or DIAG9 like 'E0076' or DIAG10 like 'E0076' or DIAG11 like 'E0076' or DIAG12 like 'E0076' or DIAG13 like 'E0076' or DIAG14 like 'E0076' or DIAG15 like 'E0076' or DIAG16 like 'E0076' or DIAG17 like 'E0076' or DIAG18 like 'E0076' or DIAG19 like 'E0076' or DIAG20 like 'E0076' or DIAG21 like 'E0076' or DIAG22 like 'E0076' or DIAG23 like 'E0076' or DIAG24 like 'E0076' or DIAG25 like 'E0076' or DIAG26 like 'E0076' or DIAG27 like 'E0076' or DIAG28 like 'E0076') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#inpatient basketball ICD10
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9367' or DIAG1 like 'Y9367' or DIAG2 like 'Y9367' or DIAG3 like 'Y9367' or DIAG4 like 'Y9367' or DIAG5 like 'Y9367' or DIAG6 like 'Y9367' or DIAG7 like 'Y9367' or DIAG8 like 'Y9367' or DIAG9 like 'Y9367' or DIAG10 like 'Y9367' or DIAG11 like 'Y9367' or DIAG12 like 'Y9367' or DIAG13 like 'Y9367' or DIAG14 like 'Y9367' or DIAG15 like 'Y9367' or DIAG16 like 'Y9367' or DIAG17 like 'Y9367' or DIAG18 like 'Y9367' or DIAG19 like 'Y9367' or DIAG20 like 'Y9367' or DIAG21 like 'Y9367' or DIAG22 like 'Y9367' or DIAG23 like 'Y9367' or DIAG24 like 'Y9367' or DIAG25 like 'Y9367' or DIAG26 like 'Y9367' or DIAG27 like 'Y9367' or DIAG28 like 'Y9367') and AGE_GROUP = '15-19' )
+;
+
+#outpatient basketball ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0076' or DIAG1 like 'E0076' or DIAG2 like 'E0076' or DIAG3 like 'E0076' or DIAG4 like 'E0076' or DIAG5 like 'E0076' or DIAG6 like 'E0076' or DIAG7 like 'E0076' or DIAG8 like 'E0076' or DIAG9 like 'E0076' or DIAG10 like 'E0076' or DIAG11 like 'E0076' or DIAG12 like 'E0076' or DIAG13 like 'E0076' or DIAG14 like 'E0076' or DIAG15 like 'E0076' or DIAG16 like 'E0076' or DIAG17 like 'E0076' or DIAG18 like 'E0076' or DIAG19 like 'E0076' or DIAG20 like 'E0076' or DIAG21 like 'E0076' or DIAG22 like 'E0076' or DIAG23 like 'E0076' or DIAG24 like 'E0076' or DIAG25 like 'E0076' or DIAG26 like 'E0076' or DIAG27 like 'E0076' or DIAG28 like 'E0076') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient basketball ICD10
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9367' or DIAG1 like 'Y9367' or DIAG2 like 'Y9367' or DIAG3 like 'Y9367' or DIAG4 like 'Y9367' or DIAG5 like 'Y9367' or DIAG6 like 'Y9367' or DIAG7 like 'Y9367' or DIAG8 like 'Y9367' or DIAG9 like 'Y9367' or DIAG10 like 'Y9367' or DIAG11 like 'Y9367' or DIAG12 like 'Y9367' or DIAG13 like 'Y9367' or DIAG14 like 'Y9367' or DIAG15 like 'Y9367' or DIAG16 like 'Y9367' or DIAG17 like 'Y9367' or DIAG18 like 'Y9367' or DIAG19 like 'Y9367' or DIAG20 like 'Y9367' or DIAG21 like 'Y9367' or DIAG22 like 'Y9367' or DIAG23 like 'Y9367' or DIAG24 like 'Y9367' or DIAG25 like 'Y9367' or DIAG26 like 'Y9367' or DIAG27 like 'Y9367' or DIAG28 like 'Y9367') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#inpatient baseball ICD9
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0073' or DIAG1 like 'E0073' or DIAG2 like 'E0073' or DIAG3 like 'E0073' or DIAG4 like 'E0073' or DIAG5 like 'E0073' or DIAG6 like 'E0073' or DIAG7 like 'E0073' or DIAG8 like 'E0073' or DIAG9 like 'E0073' or DIAG10 like 'E0073' or DIAG11 like 'E0073' or DIAG12 like 'E0073' or DIAG13 like 'E0073' or DIAG14 like 'E0073' or DIAG15 like 'E0073' or DIAG16 like 'E0073' or DIAG17 like 'E0073' or DIAG18 like 'E0073' or DIAG19 like 'E0073' or DIAG20 like 'E0073' or DIAG21 like 'E0073' or DIAG22 like 'E0073' or DIAG23 like 'E0073' or DIAG24 like 'E0073' or DIAG25 like 'E0073' or DIAG26 like 'E0073' or DIAG27 like 'E0073' or DIAG28 like 'E0073') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#inpatient baseball ICD10
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9364' or DIAG1 like 'Y9364' or DIAG2 like 'Y9364' or DIAG3 like 'Y9364' or DIAG4 like 'Y9364' or DIAG5 like 'Y9364' or DIAG6 like 'Y9364' or DIAG7 like 'Y9364' or DIAG8 like 'Y9364' or DIAG9 like 'Y9364' or DIAG10 like 'Y9364' or DIAG11 like 'Y9364' or DIAG12 like 'Y9364' or DIAG13 like 'Y9364' or DIAG14 like 'Y9364' or DIAG15 like 'Y9364' or DIAG16 like 'Y9364' or DIAG17 like 'Y9364' or DIAG18 like 'Y9364' or DIAG19 like 'Y9364' or DIAG20 like 'Y9364' or DIAG21 like 'Y9364' or DIAG22 like 'Y9364' or DIAG23 like 'Y9364' or DIAG24 like 'Y9364' or DIAG25 like 'Y9364' or DIAG26 like 'Y9364' or DIAG27 like 'Y9364' or DIAG28 like 'Y9364') and AGE_GROUP = '15-19' )
+;
+
+#outpatient baseball ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0073' or DIAG1 like 'E0073' or DIAG2 like 'E0073' or DIAG3 like 'E0073' or DIAG4 like 'E0073' or DIAG5 like 'E0073' or DIAG6 like 'E0073' or DIAG7 like 'E0073' or DIAG8 like 'E0073' or DIAG9 like 'E0073' or DIAG10 like 'E0073' or DIAG11 like 'E0073' or DIAG12 like 'E0073' or DIAG13 like 'E0073' or DIAG14 like 'E0073' or DIAG15 like 'E0073' or DIAG16 like 'E0073' or DIAG17 like 'E0073' or DIAG18 like 'E0073' or DIAG19 like 'E0073' or DIAG20 like 'E0073' or DIAG21 like 'E0073' or DIAG22 like 'E0073' or DIAG23 like 'E0073' or DIAG24 like 'E0073' or DIAG25 like 'E0073' or DIAG26 like 'E0073' or DIAG27 like 'E0073' or DIAG28 like 'E0073') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient baseball ICD10 
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9364' or DIAG1 like 'Y9364' or DIAG2 like 'Y9364' or DIAG3 like 'Y9364' or DIAG4 like 'Y9364' or DIAG5 like 'Y9364' or DIAG6 like 'Y9364' or DIAG7 like 'Y9364' or DIAG8 like 'Y9364' or DIAG9 like 'Y9364' or DIAG10 like 'Y9364' or DIAG11 like 'Y9364' or DIAG12 like 'Y9364' or DIAG13 like 'Y9364' or DIAG14 like 'Y9364' or DIAG15 like 'Y9364' or DIAG16 like 'Y9364' or DIAG17 like 'Y9364' or DIAG18 like 'Y9364' or DIAG19 like 'Y9364' or DIAG20 like 'Y9364' or DIAG21 like 'Y9364' or DIAG22 like 'Y9364' or DIAG23 like 'Y9364' or DIAG24 like 'Y9364' or DIAG25 like 'Y9364' or DIAG26 like 'Y9364' or DIAG27 like 'Y9364' or DIAG28 like 'Y9364') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#inpatient Lax+field hockey ICD9
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0074' or DIAG1 like 'E0074' or DIAG2 like 'E0074' or DIAG3 like 'E0074' or DIAG4 like 'E0074' or DIAG5 like 'E0074' or DIAG6 like 'E0074' or DIAG7 like 'E0074' or DIAG8 like 'E0074' or DIAG9 like 'E0074' or DIAG10 like 'E0074' or DIAG11 like 'E0074' or DIAG12 like 'E0074' or DIAG13 like 'E0074' or DIAG14 like 'E0074' or DIAG15 like 'E0074' or DIAG16 like 'E0074' or DIAG17 like 'E0074' or DIAG18 like 'E0074' or DIAG19 like 'E0074' or DIAG20 like 'E0074' or DIAG21 like 'E0074' or DIAG22 like 'E0074' or DIAG23 like 'E0074' or DIAG24 like 'E0074' or DIAG25 like 'E0074' or DIAG26 like 'E0074' or DIAG27 like 'E0074' or DIAG28 like 'E0074') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#inpatient Lax+field hockey ICD10 -- COME BACK AND CHECK TO SEE IF WE CAN FIGURE OUT WHY THERE'S 0 ROWS RETURNED
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9365' or DIAG1 like 'Y9365' or DIAG2 like 'Y9365' or DIAG3 like 'Y9365' or DIAG4 like 'Y9365' or DIAG5 like 'Y9365' or DIAG6 like 'Y9365' or DIAG7 like 'Y9365' or DIAG8 like 'Y9365' or DIAG9 like 'Y9365' or DIAG10 like 'Y9365' or DIAG11 like 'Y9365' or DIAG12 like 'Y9365' or DIAG13 like 'Y9365' or DIAG14 like 'Y9365' or DIAG15 like 'Y9365' or DIAG16 like 'Y9365' or DIAG17 like 'Y9365' or DIAG18 like 'Y9365' or DIAG19 like 'Y9365' or DIAG20 like 'Y9365' or DIAG21 like 'Y9365' or DIAG22 like 'Y9365' or DIAG23 like 'Y9365' or DIAG24 like 'Y9365' or DIAG25 like 'Y9365' or DIAG26 like 'Y9365' or DIAG27 like 'Y9365' or DIAG28 like 'Y9365') and AGE_GROUP = '15-19' )
+;
+
+#CHECK FOR NUMBERS ABOVE TO MAKE SURE COUNTS ARE RIGHT HERE. THEY ARE, IT'S 20-24 Y/O'S
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9365' or DIAG1 like 'Y9365' or DIAG2 like 'Y9365' or DIAG3 like 'Y9365' or DIAG4 like 'Y9365' or DIAG5 like 'Y9365' or DIAG6 like 'Y9365' or DIAG7 like 'Y9365' or DIAG8 like 'Y9365' or DIAG9 like 'Y9365' or DIAG10 like 'Y9365' or DIAG11 like 'Y9365' or DIAG12 like 'Y9365' or DIAG13 like 'Y9365' or DIAG14 like 'Y9365' or DIAG15 like 'Y9365' or DIAG16 like 'Y9365' or DIAG17 like 'Y9365' or DIAG18 like 'Y9365' or DIAG19 like 'Y9365' or DIAG20 like 'Y9365' or DIAG21 like 'Y9365' or DIAG22 like 'Y9365' or DIAG23 like 'Y9365' or DIAG24 like 'Y9365' or DIAG25 like 'Y9365' or DIAG26 like 'Y9365' or DIAG27 like 'Y9365' or DIAG28 like 'Y9365')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR
+;
+
+
+#outpatient Lax+field hockey ICD9 
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0074' or DIAG1 like 'E0074' or DIAG2 like 'E0074' or DIAG3 like 'E0074' or DIAG4 like 'E0074' or DIAG5 like 'E0074' or DIAG6 like 'E0074' or DIAG7 like 'E0074' or DIAG8 like 'E0074' or DIAG9 like 'E0074' or DIAG10 like 'E0074' or DIAG11 like 'E0074' or DIAG12 like 'E0074' or DIAG13 like 'E0074' or DIAG14 like 'E0074' or DIAG15 like 'E0074' or DIAG16 like 'E0074' or DIAG17 like 'E0074' or DIAG18 like 'E0074' or DIAG19 like 'E0074' or DIAG20 like 'E0074' or DIAG21 like 'E0074' or DIAG22 like 'E0074' or DIAG23 like 'E0074' or DIAG24 like 'E0074' or DIAG25 like 'E0074' or DIAG26 like 'E0074' or DIAG27 like 'E0074' or DIAG28 like 'E0074') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient Lax+field hockey ICD10
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9365' or DIAG1 like 'Y9365' or DIAG2 like 'Y9365' or DIAG3 like 'Y9365' or DIAG4 like 'Y9365' or DIAG5 like 'Y9365' or DIAG6 like 'Y9365' or DIAG7 like 'Y9365' or DIAG8 like 'Y9365' or DIAG9 like 'Y9365' or DIAG10 like 'Y9365' or DIAG11 like 'Y9365' or DIAG12 like 'Y9365' or DIAG13 like 'Y9365' or DIAG14 like 'Y9365' or DIAG15 like 'Y9365' or DIAG16 like 'Y9365' or DIAG17 like 'Y9365' or DIAG18 like 'Y9365' or DIAG19 like 'Y9365' or DIAG20 like 'Y9365' or DIAG21 like 'Y9365' or DIAG22 like 'Y9365' or DIAG23 like 'Y9365' or DIAG24 like 'Y9365' or DIAG25 like 'Y9365' or DIAG26 like 'Y9365' or DIAG27 like 'Y9365' or DIAG28 like 'Y9365') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#inpatient ice hockey ICD9
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0031' or DIAG1 like 'E0031' or DIAG2 like 'E0031' or DIAG3 like 'E0031' or DIAG4 like 'E0031' or DIAG5 like 'E0031' or DIAG6 like 'E0031' or DIAG7 like 'E0031' or DIAG8 like 'E0031' or DIAG9 like 'E0031' or DIAG10 like 'E0031' or DIAG11 like 'E0031' or DIAG12 like 'E0031' or DIAG13 like 'E0031' or DIAG14 like 'E0031' or DIAG15 like 'E0031' or DIAG16 like 'E0031' or DIAG17 like 'E0031' or DIAG18 like 'E0031' or DIAG19 like 'E0031' or DIAG20 like 'E0031' or DIAG21 like 'E0031' or DIAG22 like 'E0031' or DIAG23 like 'E0031' or DIAG24 like 'E0031' or DIAG25 like 'E0031' or DIAG26 like 'E0031' or DIAG27 like 'E0031' or DIAG28 like 'E0031') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#inpatient ice hockey ICD10
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9322' or DIAG1 like 'Y9322' or DIAG2 like 'Y9322' or DIAG3 like 'Y9322' or DIAG4 like 'Y9322' or DIAG5 like 'Y9322' or DIAG6 like 'Y9322' or DIAG7 like 'Y9322' or DIAG8 like 'Y9322' or DIAG9 like 'Y9322' or DIAG10 like 'Y9322' or DIAG11 like 'Y9322' or DIAG12 like 'Y9322' or DIAG13 like 'Y9322' or DIAG14 like 'Y9322' or DIAG15 like 'Y9322' or DIAG16 like 'Y9322' or DIAG17 like 'Y9322' or DIAG18 like 'Y9322' or DIAG19 like 'Y9322' or DIAG20 like 'Y9322' or DIAG21 like 'Y9322' or DIAG22 like 'Y9322' or DIAG23 like 'Y9322' or DIAG24 like 'Y9322' or DIAG25 like 'Y9322' or DIAG26 like 'Y9322' or DIAG27 like 'Y9322' or DIAG28 like 'Y9322') and AGE_GROUP = '15-19' )
+;
+
+#outpatient ice hockey ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0031' or DIAG1 like 'E0031' or DIAG2 like 'E0031' or DIAG3 like 'E0031' or DIAG4 like 'E0031' or DIAG5 like 'E0031' or DIAG6 like 'E0031' or DIAG7 like 'E0031' or DIAG8 like 'E0031' or DIAG9 like 'E0031' or DIAG10 like 'E0031' or DIAG11 like 'E0031' or DIAG12 like 'E0031' or DIAG13 like 'E0031' or DIAG14 like 'E0031' or DIAG15 like 'E0031' or DIAG16 like 'E0031' or DIAG17 like 'E0031' or DIAG18 like 'E0031' or DIAG19 like 'E0031' or DIAG20 like 'E0031' or DIAG21 like 'E0031' or DIAG22 like 'E0031' or DIAG23 like 'E0031' or DIAG24 like 'E0031' or DIAG25 like 'E0031' or DIAG26 like 'E0031' or DIAG27 like 'E0031' or DIAG28 like 'E0031') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient ice hockey ICD10
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9322' or DIAG1 like 'Y9322' or DIAG2 like 'Y9322' or DIAG3 like 'Y9322' or DIAG4 like 'Y9322' or DIAG5 like 'Y9322' or DIAG6 like 'Y9322' or DIAG7 like 'Y9322' or DIAG8 like 'Y9322' or DIAG9 like 'Y9322' or DIAG10 like 'Y9322' or DIAG11 like 'Y9322' or DIAG12 like 'Y9322' or DIAG13 like 'Y9322' or DIAG14 like 'Y9322' or DIAG15 like 'Y9322' or DIAG16 like 'Y9322' or DIAG17 like 'Y9322' or DIAG18 like 'Y9322' or DIAG19 like 'Y9322' or DIAG20 like 'Y9322' or DIAG21 like 'Y9322' or DIAG22 like 'Y9322' or DIAG23 like 'Y9322' or DIAG24 like 'Y9322' or DIAG25 like 'Y9322' or DIAG26 like 'Y9322' or DIAG27 like 'Y9322' or DIAG28 like 'Y9322') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#inpatient track n field ICD9
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, LOS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0066' or DIAG1 like 'E0066' or DIAG2 like 'E0066' or DIAG3 like 'E0066' or DIAG4 like 'E0066' or DIAG5 like 'E0066' or DIAG6 like 'E0066' or DIAG7 like 'E0066' or DIAG8 like 'E0066' or DIAG9 like 'E0066' or DIAG10 like 'E0066' or DIAG11 like 'E0066' or DIAG12 like 'E0066' or DIAG13 like 'E0066' or DIAG14 like 'E0066' or DIAG15 like 'E0066' or DIAG16 like 'E0066' or DIAG17 like 'E0066' or DIAG18 like 'E0066' or DIAG19 like 'E0066' or DIAG20 like 'E0066' or DIAG21 like 'E0066' or DIAG22 like 'E0066' or DIAG23 like 'E0066' or DIAG24 like 'E0066' or DIAG25 like 'E0066' or DIAG26 like 'E0066' or DIAG27 like 'E0066' or DIAG28 like 'E0066') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#inpatient track n field  ICD10 -- NO DATA FOR THIS, CHECK NUMBERS W/ CHRIS
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG_CD, READM30, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9357' or DIAG1 like 'Y9357' or DIAG2 like 'Y9357' or DIAG3 like 'Y9357' or DIAG4 like 'Y9357' or DIAG5 like 'Y9357' or DIAG6 like 'Y9357' or DIAG7 like 'Y9357' or DIAG8 like 'Y9357' or DIAG9 like 'Y9357' or DIAG10 like 'Y9357' or DIAG11 like 'Y9357' or DIAG12 like 'Y9357' or DIAG13 like 'Y9357' or DIAG14 like 'Y9357' or DIAG15 like 'Y9357' or DIAG16 like 'Y9357' or DIAG17 like 'Y9357' or DIAG18 like 'Y9357' or DIAG19 like 'Y9357' or DIAG20 like 'Y9357' or DIAG21 like 'Y9357' or DIAG22 like 'Y9357' or DIAG23 like 'Y9357' or DIAG24 like 'Y9357' or DIAG25 like 'Y9357' or DIAG26 like 'Y9357' or DIAG27 like 'Y9357' or DIAG28 like 'Y9357') and AGE_GROUP = '15-19' )
+;
+
+# NUMBER CHECKS FOR TRACK COUNT ICD1O IP -- NO INFO FOR ANY AGE GROUPS INPATIENT ICD10
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9357' or DIAG1 like 'Y9357' or DIAG2 like 'Y9357' or DIAG3 like 'Y9357' or DIAG4 like 'Y9357' or DIAG5 like 'Y9357' or DIAG6 like 'Y9357' or DIAG7 like 'Y9357' or DIAG8 like 'Y9357' or DIAG9 like 'Y9357' or DIAG10 like 'Y9357' or DIAG11 like 'Y9357' or DIAG12 like 'Y9357' or DIAG13 like 'Y9357' or DIAG14 like 'Y9357' or DIAG15 like 'Y9357' or DIAG16 like 'Y9357' or DIAG17 like 'Y9357' or DIAG18 like 'Y9357' or DIAG19 like 'Y9357' or DIAG20 like 'Y9357' or DIAG21 like 'Y9357' or DIAG22 like 'Y9357' or DIAG23 like 'Y9357' or DIAG24 like 'Y9357' or DIAG25 like 'Y9357' or DIAG26 like 'Y9357' or DIAG27 like 'Y9357' or DIAG28 like 'Y9357')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR
+;
+
+
+#outpatient track n field  ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0066' or DIAG1 like 'E0066' or DIAG2 like 'E0066' or DIAG3 like 'E0066' or DIAG4 like 'E0066' or DIAG5 like 'E0066' or DIAG6 like 'E0066' or DIAG7 like 'E0066' or DIAG8 like 'E0066' or DIAG9 like 'E0066' or DIAG10 like 'E0066' or DIAG11 like 'E0066' or DIAG12 like 'E0066' or DIAG13 like 'E0066' or DIAG14 like 'E0066' or DIAG15 like 'E0066' or DIAG16 like 'E0066' or DIAG17 like 'E0066' or DIAG18 like 'E0066' or DIAG19 like 'E0066' or DIAG20 like 'E0066' or DIAG21 like 'E0066' or DIAG22 like 'E0066' or DIAG23 like 'E0066' or DIAG24 like 'E0066' or DIAG25 like 'E0066' or DIAG26 like 'E0066' or DIAG27 like 'E0066' or DIAG28 like 'E0066') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient track n field  ICD10
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9357' or DIAG1 like 'Y9357' or DIAG2 like 'Y9357' or DIAG3 like 'Y9357' or DIAG4 like 'Y9357' or DIAG5 like 'Y9357' or DIAG6 like 'Y9357' or DIAG7 like 'Y9357' or DIAG8 like 'Y9357' or DIAG9 like 'Y9357' or DIAG10 like 'Y9357' or DIAG11 like 'Y9357' or DIAG12 like 'Y9357' or DIAG13 like 'Y9357' or DIAG14 like 'Y9357' or DIAG15 like 'Y9357' or DIAG16 like 'Y9357' or DIAG17 like 'Y9357' or DIAG18 like 'Y9357' or DIAG19 like 'Y9357' or DIAG20 like 'Y9357' or DIAG21 like 'Y9357' or DIAG22 like 'Y9357' or DIAG23 like 'Y9357' or DIAG24 like 'Y9357' or DIAG25 like 'Y9357' or DIAG26 like 'Y9357' or DIAG27 like 'Y9357' or DIAG28 like 'Y9357') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#inpatient gymnastics ICD9 CHECK AGAIN FOR NO DATA
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0052' or DIAG1 like 'E0052' or DIAG2 like 'E0052' or DIAG3 like 'E0052' or DIAG4 like 'E0052' or DIAG5 like 'E0052' or DIAG6 like 'E0052' or DIAG7 like 'E0052' or DIAG8 like 'E0052' or DIAG9 like 'E0052' or DIAG10 like 'E0052' or DIAG11 like 'E0052' or DIAG12 like 'E0052' or DIAG13 like 'E0052' or DIAG14 like 'E0052' or DIAG15 like 'E0052' or DIAG16 like 'E0052' or DIAG17 like 'E0052' or DIAG18 like 'E0052' or DIAG19 like 'E0052' or DIAG20 like 'E0052' or DIAG21 like 'E0052' or DIAG22 like 'E0052' or DIAG23 like 'E0052' or DIAG24 like 'E0052' or DIAG25 like 'E0052' or DIAG26 like 'E0052' or DIAG27 like 'E0052' or DIAG28 like 'E0052') and (AGE_GROUP = 4 or AGE_GROUP = '15-19' or AGE_GROUP = 15 ))
+;
+
+#CHECKS FOR NUMBERS FOR ICD9, WE'RE IN THE CLEAR NONE OF THEM ARE 15-19/ ONE 10 Y/O IF INTERESTED
+select UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, DIED, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, MAJSERVI, LOS, PRINDIAG, PRINPROC, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28, DIAG29, PROC1, PROC2, PROC3, PROC4, PROC5, PROC6, PROC7, PROC8, PROC9, PROC10, PROC11, PROC12, PROC13, PROC14, PROC15, PROC16, PROC17, PROC18, PROC19, PROC20, PROC21, PROC22, PROC23, PROC24, PROC25, PROC26, PROC27, PROC28, PROC29 
+from ipALL 
+where((icdflag = '9' and (PRINDIAG like 'E0052' or DIAG1 like 'E0052' or DIAG2 like 'E0052' or DIAG3 like 'E0052' or DIAG4 like 'E0052' or DIAG5 like 'E0052' or DIAG6 like 'E0052' or DIAG7 like 'E0052' or DIAG8 like 'E0052' or DIAG9 like 'E0052' or DIAG10 like 'E0052' or DIAG11 like 'E0052' or DIAG12 like 'E0052' or DIAG13 like 'E0052' or DIAG14 like 'E0052' or DIAG15 like 'E0052' or DIAG16 like 'E0052' or DIAG17 like 'E0052' or DIAG18 like 'E0052' or DIAG19 like 'E0052' or DIAG20 like 'E0052' or DIAG21 like 'E0052' or DIAG22 like 'E0052' or DIAG23 like 'E0052' or DIAG24 like 'E0052' or DIAG25 like 'E0052' or DIAG26 like 'E0052' or DIAG27 like 'E0052' or DIAG28 like 'E0052' or DIAG29 like 'E0052'))) 
+order by YEAR desc;
+
+# CHECK FOR NO DATA ICD9 15 Y/O'S, WE'RE GOOD.
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '9' and (PRINDIAG like 'E0052' or DIAG1 like 'E0052' or DIAG2 like 'E0052' or DIAG3 like 'E0052' or DIAG4 like 'E0052' or DIAG5 like 'E0052' or DIAG6 like 'E0052' or DIAG7 like 'E0052' or DIAG8 like 'E0052' or DIAG9 like 'E0052' or DIAG10 like 'E0052' or DIAG11 like 'E0052' or DIAG12 like 'E0052' or DIAG13 like 'E0052' or DIAG14 like 'E0052' or DIAG15 like 'E0052' or DIAG16 like 'E0052' or DIAG17 like 'E0052' or DIAG18 like 'E0052' or DIAG19 like 'E0052' or DIAG20 like 'E0052' or DIAG21 like 'E0052' or DIAG22 like 'E0052' or DIAG23 like 'E0052' or DIAG24 like 'E0052' or DIAG25 like 'E0052' or DIAG26 like 'E0052' or DIAG27 like 'E0052' or DIAG28 like 'E0052')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR;
+
+#inpatient gymnastics ICD10 CHECK AGAIN FOR NO DATA
+select DIED, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9343' or DIAG1 like 'Y9343' or DIAG2 like 'Y9343' or DIAG3 like 'Y9343' or DIAG4 like 'Y9343' or DIAG5 like 'Y9343' or DIAG6 like 'Y9343' or DIAG7 like 'Y9343' or DIAG8 like 'Y9343' or DIAG9 like 'Y9343' or DIAG10 like 'Y9343' or DIAG11 like 'Y9343' or DIAG12 like 'Y9343' or DIAG13 like 'Y9343' or DIAG14 like 'Y9343' or DIAG15 like 'Y9343' or DIAG16 like 'Y9343' or DIAG17 like 'Y9343' or DIAG18 like 'Y9343' or DIAG19 like 'Y9343' or DIAG20 like 'Y9343' or DIAG21 like 'Y9343' or DIAG22 like 'Y9343' or DIAG23 like 'Y9343' or DIAG24 like 'Y9343' or DIAG25 like 'Y9343' or DIAG26 like 'Y9343' or DIAG27 like 'Y9343' or DIAG28 like 'Y9343') and AGE_GROUP = '15-19' )
+;
+
+# CHECK FOR NO DATA HERE -- IN CLEAR NO COUNTS FOR ANY INFO
+select AGE_GROUP, YEAR, count(*) 
+from ipALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9343' or DIAG1 like 'Y9343' or DIAG2 like 'Y9343' or DIAG3 like 'Y9343' or DIAG4 like 'Y9343' or DIAG5 like 'Y9343' or DIAG6 like 'Y9343' or DIAG7 like 'Y9343' or DIAG8 like 'Y9343' or DIAG9 like 'Y9343' or DIAG10 like 'Y9343' or DIAG11 like 'Y9343' or DIAG12 like 'Y9343' or DIAG13 like 'Y9343' or DIAG14 like 'Y9343' or DIAG15 like 'Y9343' or DIAG16 like 'Y9343' or DIAG17 like 'Y9343' or DIAG18 like 'Y9343' or DIAG19 like 'Y9343' or DIAG20 like 'Y9343' or DIAG21 like 'Y9343' or DIAG22 like 'Y9343' or DIAG23 like 'Y9343' or DIAG24 like 'Y9343' or DIAG25 like 'Y9343' or DIAG26 like 'Y9343' or DIAG27 like 'Y9343' or DIAG28 like 'Y9343')) 
+group by AGE_GROUP, YEAR
+order by AGE_GROUP, YEAR
+;
+
+#outpatient gymnastics ICD9
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '9' and (PRINDIAG like 'E0052' or DIAG1 like 'E0052' or DIAG2 like 'E0052' or DIAG3 like 'E0052' or DIAG4 like 'E0052' or DIAG5 like 'E0052' or DIAG6 like 'E0052' or DIAG7 like 'E0052' or DIAG8 like 'E0052' or DIAG9 like 'E0052' or DIAG10 like 'E0052' or DIAG11 like 'E0052' or DIAG12 like 'E0052' or DIAG13 like 'E0052' or DIAG14 like 'E0052' or DIAG15 like 'E0052' or DIAG16 like 'E0052' or DIAG17 like 'E0052' or DIAG18 like 'E0052' or DIAG19 like 'E0052' or DIAG20 like 'E0052' or DIAG21 like 'E0052' or DIAG22 like 'E0052' or DIAG23 like 'E0052' or DIAG24 like 'E0052' or DIAG25 like 'E0052' or DIAG26 like 'E0052' or DIAG27 like 'E0052' or DIAG28 like 'E0052') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+#outpatient gymnastics ICD10
+select PAT_DISP_OP, UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, MORTALIT, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, SEVERITY, LOS, TOT_CHG, PRELANG, RESIDENT_STATUS, PRINDIAG, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28 
+from opALL 
+where(icdflag = '0' and (PRINDIAG like 'Y9343' or DIAG1 like 'Y9343' or DIAG2 like 'Y9343' or DIAG3 like 'Y9343' or DIAG4 like 'Y9343' or DIAG5 like 'Y9343' or DIAG6 like 'Y9343' or DIAG7 like 'Y9343' or DIAG8 like 'Y9343' or DIAG9 like 'Y9343' or DIAG10 like 'Y9343' or DIAG11 like 'Y9343' or DIAG12 like 'Y9343' or DIAG13 like 'Y9343' or DIAG14 like 'Y9343' or DIAG15 like 'Y9343' or DIAG16 like 'Y9343' or DIAG17 like 'Y9343' or DIAG18 like 'Y9343' or DIAG19 like 'Y9343' or DIAG20 like 'Y9343' or DIAG21 like 'Y9343' or DIAG22 like 'Y9343' or DIAG23 like 'Y9343' or DIAG24 like 'Y9343' or DIAG25 like 'Y9343' or DIAG26 like 'Y9343' or DIAG27 like 'Y9343' or DIAG28 like 'Y9343') and (AGE_GROUP = '15-19' or AGE_GROUP = 15 )) 
+order by YEAR desc;
+
+# MERGE THE SETS WE'VE GOT NOW, COME BACK IF WE NEED TO DO MORE QUERIES
+
+
+
+select UNIQUEID, AGE_GROUP, SEX, RACE, ETHNICIT, MARISTAT, SAS_COUNTY, ZIPCODE, QTR, YEAR, DIED, COUNTRY, HOSPID, PAYER1, PAYER2, SEVERITY, MAJSERVI, LOS, PRINDIAG, PRINPROC, DIAG1, DIAG2, DIAG3, DIAG4, DIAG5, DIAG6, DIAG7, DIAG8, DIAG9, DIAG10, DIAG11, DIAG12, DIAG13, DIAG14, DIAG15, DIAG16, DIAG17, DIAG18, DIAG19, DIAG20, DIAG21, DIAG22, DIAG23, DIAG24, DIAG25, DIAG26, DIAG27, DIAG28, DIAG29, PROC1, PROC2, PROC3, PROC4, PROC5, PROC6, PROC7, PROC8, PROC9, PROC10, PROC11, PROC12, PROC13, PROC14, PROC15, PROC16, PROC17, PROC18, PROC19, PROC20, PROC21, PROC22, PROC23, PROC24, PROC25, PROC26, PROC27, PROC28, PROC29 from ipALL where E_CODE = 'E0070';
+
