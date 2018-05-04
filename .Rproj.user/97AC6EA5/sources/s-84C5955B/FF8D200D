@@ -1,0 +1,22 @@
+{
+    "collab_server" : "",
+    "contents" : "",
+    "created" : 1525390364641.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "0",
+    "id" : "FF8D200D",
+    "lastKnownWriteTime" : 1525363712,
+    "last_content_update" : 1525363712,
+    "path" : "~/Documents/GitHub/Sports_injuries_examination/sports_injuries_data_new.R",
+    "project_path" : "sports_injuries_data_new.R",
+    "properties" : {
+        "cursorPosition" : "673,0",
+        "scrollLine" : "664"
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
